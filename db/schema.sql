@@ -4,31 +4,30 @@ CREATE DATABASE dept_db;
 USE dept_db;
 
 CREATE TABLE departments (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id INT NOT NULL PRIMARY KEY,
   dept_name VARCHAR(30) NOT NULL
 );
 
-DROP DATABASE IF EXISTS roles_db;
-CREATE DATABASE roles_db;
-
-USE roles_db;
-
 CREATE TABLE positions (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id INT NOT NULL PRIMARY KEY,
   title VARCHAR(30) NOT NULL,
   salary DECIMAL NOT NULL,
-  department_id INT NOT NULL
+  department_id INT NOT NULL,
+  FOREIGN KEY (department_id)
+  REFERENCES departments(id)
+  ON UPDATE CASCADE
 );
-
-DROP DATABASE IF EXISTS employeelist_db;
-CREATE DATABASE employeelist_db;
-
-USE employeelist_db;
 
 CREATE TABLE employees (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   first_name VARCHAR(30) NOT NULL,
   last_name VARCHAR(30) NOT NULL,
-  role_id INT NOT NULL,
-  manager_id INT
+  role_id INT,
+  manager_id INT,
+  FOREIGN KEY (role_id)
+  REFERENCES positions(id)
+  ON UPDATE CASCADE,
+  FOREIGN KEY (manager_id)
+  REFERENCES employees(id)
+  ON UPDATE CASCADE
 );

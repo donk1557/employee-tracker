@@ -1,5 +1,7 @@
 const inquire = require("inquirer");
+const Server = require("./server");
 
+function menuLoop () {
 const menu = inquire
 .prompt([
   {
@@ -18,7 +20,38 @@ const menu = inquire
       "Add Department",
       new inquire.Separator(),
       "Quit",
+      new inquire.Separator(),
 
     ],
   },
-])
+]).then((data) => {
+  switch (data.option) {
+    case "View All Employees":
+     
+    break;
+    case "Add Employee":
+    
+    break;
+    case "Update Employee Role":
+    
+    break;
+    case "View All Roles":
+    Server.showPos();
+    break;
+    case "Add Role":
+    
+    break;
+    case "View All Departments":
+    Server.showDept();
+    menuLoop();
+    break;
+    case "Add Department":
+    
+    break;
+    default:
+    return;
+  }
+}
+  )};
+
+  menuLoop();
