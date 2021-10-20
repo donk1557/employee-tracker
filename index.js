@@ -30,28 +30,62 @@ const menu = inquire
      
     break;
     case "Add Employee":
-    
+    questionEmployee();
     break;
     case "Update Employee Role":
-    
+    questionAlt();
     break;
     case "View All Roles":
     Server.showPos();
     break;
     case "Add Role":
-    
+    questionRole();
     break;
     case "View All Departments":
     Server.showDept();
     menuLoop();
     break;
     case "Add Department":
-    
+    questionDept();
     break;
     default:
     return;
   }
 }
   )};
+
+  function questionDept () {
+    const menu = inquire
+.prompt([
+  {
+    type: "input",
+    message: "What is the name of the department?",
+    name: "Name",
+  },
+]).then((data) => {
+  console.log(data.Name);
+  Server.addDept(data.Name);
+})}
+
+// function questionDept () {
+//   const menu = inquire
+// .prompt([
+// {
+//   type: "list",
+//   message: "Select Employee:",
+//   name: "worker",
+//   choices: [SELECT employee_id FROM employees  ]
+// },
+// {
+//   type: "list",
+//   message: "Pick new role:",
+//   name: "newjob",
+//   choices: [SELECT title FROM roles]
+// },
+// ]).then((data) => {
+// console.log(data.Name);
+// Server.addDept(data.Name);
+// })}
+  
 
   menuLoop();

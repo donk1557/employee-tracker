@@ -29,10 +29,18 @@ db.query('SELECT * FROM departments', function (err, results) {
 }
 
 function showPos () {
-db.query('SELECT id, title, salary, dept_name FROM positions INNER JOIN departments USING (id)', function (err, results) {
+db.query('SELECT * FROM positions LEFT JOIN departments USING (id)', function (err, results) {
     console.table(results);
     });
 
+}
+
+function addDept (data) {
+  db.query('INSERT INTO departments SET ?', {dept_name: data}, function (err, results) {
+    console.log("IN: ", results);
+    console.log("IN: ", data);
+    showDept();
+  });
 }
 
 
@@ -48,4 +56,5 @@ app.use((req, res) => {
   module.exports = {
       showDept,
       showPos,
+      addDept
   }
