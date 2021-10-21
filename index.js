@@ -37,19 +37,21 @@ const menu = inquire
     break;
     case "View All Roles":
     Server.showPos();
+    setTimeout(() => {menuLoop()}, 1000);
     break;
     case "Add Role":
     questionRole();
     break;
     case "View All Departments":
     Server.showDept();
-    menuLoop();
+    setTimeout(() => {menuLoop()}, 1000);
     break;
     case "Add Department":
     questionDept();
+    setTimeout(() => {menuLoop()}, 1000);
     break;
     default:
-    return;
+    return '';
   }
 }
   )};
@@ -65,6 +67,30 @@ const menu = inquire
 ]).then((data) => {
   console.log(data.Name);
   Server.addDept(data.Name);
+})}
+
+  function questionRole () {
+    const menu = inquire
+.prompt([
+  {
+    type: "input",
+    message: "What is the name of the role?",
+    name: "Name",
+  },
+  {
+    type: "input",
+    message: "How much is the salary?",
+    name: "amount",
+  },
+  {
+    type: "input",
+    message: "Which department does it belong?",
+    name: "depo",
+
+  },
+]).then((data) => {
+  console.log(data);
+  // Server.addRole(data.Name);
 })}
 
 // function questionDept () {
@@ -89,3 +115,5 @@ const menu = inquire
   
 
   menuLoop();
+
+module.exports = menuLoop;

@@ -1,6 +1,7 @@
 const express = require('express');
-// Import and require mysql2
 const mysql = require('mysql2');
+const menuLoop = require('./index');
+const menu = require('./index');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -25,23 +26,25 @@ const db = mysql.createConnection(
 function showDept () {
 db.query('SELECT * FROM departments', function (err, results) {
     console.table(results);
+    
   });
 }
 
 function showPos () {
-db.query('SELECT * FROM positions LEFT JOIN departments USING (id)', function (err, results) {
+db.query('SELECT * FROM positions LEFT JOIN departments ON positions.department_id = departments.id', function (err, results) {
     console.table(results);
+  
     });
 
 }
 
 function addDept (data) {
-  db.query('INSERT INTO departments SET ?', {dept_name: data}, function (err, results) {
-    console.log("IN: ", results);
-    console.log("IN: ", data);
+  db.query('INSERT INTO departments (dept_name) VALUES (?)', data, function (err, results) {
     showDept();
+    
   });
 }
+
 
 
 
@@ -53,8 +56,11 @@ app.use((req, res) => {
     console.log(`Server running on port ${PORT}`);
   });
 
+  menu;
+
   module.exports = {
       showDept,
       showPos,
-      addDept
+      addDept, 
+      
   }
